@@ -854,7 +854,8 @@ namespace GVFS.Platform.Windows
                     return HResult.InternalError;
                 }
 
-                string sha = GetShaFromContentId(contentId);
+                // string sha = GetShaFromContentId(contentId);
+                string sha = virtualPath;
                 byte placeholderVersion = GetPlaceholderVersionFromProviderId(providerId);
 
                 EventMetadata metadata = new EventMetadata();

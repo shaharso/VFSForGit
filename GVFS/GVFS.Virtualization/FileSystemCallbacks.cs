@@ -59,7 +59,7 @@ namespace GVFS.Virtualization
             GVFSGitObjects gitObjects,
             RepoMetadata repoMetadata,
             BlobSizes blobSizes,
-            GitIndexProjection gitIndexProjection,
+            IGitIndexProjection gitIndexProjection,
             BackgroundFileSystemTaskRunner backgroundFileSystemTaskRunner,
             FileSystemVirtualizer fileSystemVirtualizer,
             GitStatusCache gitStatusCache = null)
@@ -97,14 +97,18 @@ namespace GVFS.Virtualization
                 throw new InvalidRepoException(error);
             }
 
-            this.GitIndexProjection = gitIndexProjection ?? new GitIndexProjection(
-                context,
-                gitObjects,
-                this.BlobSizes,
-                repoMetadata,
-                fileSystemVirtualizer,
-                placeholders,
-                this.modifiedPaths);
+            // this.GitIndexProjection = gitIndexProjection ?? new GitIndexProjection(
+            //     context,
+            //     gitObjects,
+            //     this.BlobSizes,
+            //     repoMetadata,
+            //     fileSystemVirtualizer,
+            //     placeholders,
+            //     this.modifiedPaths);
+
+            this.GitIndexProjection = gitIndexProjection ?? new MirrorFolderIndexProjection(
+                                          context,
+                                          fileSystemVirtualizer);
 
             if (backgroundFileSystemTaskRunner != null)
             {
@@ -151,7 +155,7 @@ namespace GVFS.Virtualization
 
         public BlobSizes BlobSizes { get; private set; }
 
-        public GitIndexProjection GitIndexProjection { get; private set; }
+        public IGitIndexProjection GitIndexProjection { get; private set; }
 
         /// <summary>
         /// Returns true for paths that begin with ".git\" (regardless of case)

@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace GVFS.Virtualization.Projection
 {
-    public partial class GitIndexProjection : IDisposable, IProfilerOnlyIndexProjection
+    public partial class GitIndexProjection : IGitIndexProjection
     {
         public const string ProjectionIndexBackupName = "GVFS_projection";
 

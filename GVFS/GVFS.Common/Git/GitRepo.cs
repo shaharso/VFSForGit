@@ -59,23 +59,35 @@ namespace GVFS.Common.Git
 
         public virtual bool TryCopyBlobContentStream(string blobSha, Action<Stream, long> writeAction)
         {
-            LooseBlobState state = this.GetLooseBlobState(blobSha, writeAction, out long size);
+            // if (blobSha != null && blobSha.Contains(".cs"))
+            {
+                string path = Path.Combine(@"c:\gvfs\normalGit", blobSha);
+                if (File.Exists(path))
+                {
+                    var fileStream = File.OpenRead(path);
+                    writeAction.Invoke(fileStream, fileStream.Length);
+                    return true;
+                }
 
-            if (state == LooseBlobState.Exists)
-            {
-                return true;
-            }
-            else if (state != LooseBlobState.Missing)
-            {
                 return false;
             }
 
-            if (!this.libgit2RepoInvoker.TryInvoke(repo => repo.TryCopyBlob(blobSha, writeAction), out bool copyBlobResult))
-            {
-                return false;
-            }
-
-            return copyBlobResult;
+            // LooseBlobState state = this.GetLooseBlobState(blobSha, writeAction, out long size);
+            // if (state == LooseBlobState.Exists)
+            // {
+            //     return true;
+            // }
+            // else if (state != LooseBlobState.Missing)
+            // {
+            //     return false;
+            // }
+            //
+            // if (!this.libgit2RepoInvoker.TryInvoke(repo => repo.TryCopyBlob(blobSha, writeAction), out bool copyBlobResult))
+            // {
+            //     return false;
+            // }
+            //
+            // return copyBlobResult;
         }
 
         public virtual bool CommitAndRootTreeExists(string commitSha)

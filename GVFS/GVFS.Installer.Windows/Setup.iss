@@ -18,7 +18,7 @@
 #define GVFSUpgraderDir BuildOutputDir + "\GVFS.Upgrader\bin\" + PlatformAndConfiguration
 
 #define MyAppName "GVFS"
-#define MyAppInstallerVersion GetFileVersion(GVFSDir + "\GVFS.exe")
+#define MyAppInstallerVersion "5.0.0.0"
 #define MyAppPublisher "Microsoft Corporation"
 #define MyAppPublisherURL "http://www.microsoft.com"
 #define MyAppURL "https://github.com/Microsoft/gvfs"
